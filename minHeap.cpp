@@ -3,7 +3,7 @@
 using namespace std;
 
 int minHeap::parentNode(int pos){
-    return (pos - 1) / 2;
+    return (pos + 1) / 2;
 }
 
 int minHeap::leftNode(int pos){
