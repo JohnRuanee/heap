@@ -17,6 +17,10 @@ class minHeap
         //Implement the following functions that maintain the heap property
         void siftUp(int pos);
         void siftDown(int pos);
+        int lowest(int pos);
+        int parentNode(int pos);
+        int leftNode(int pos);
+        int rightNode(int pos);
     public:
         minHeap() {} //Default constructor, heap is initiallay an empty vector
         vector<int> getHeap() {return heap;} //Returns heap data for test cases

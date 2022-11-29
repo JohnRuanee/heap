@@ -2,59 +2,72 @@
 
 using namespace std;
 
+int minHeap::parentNode(int pos){
+    return (pos - 1) / 2;
+}
+
+int minHeap::leftNode(int pos){
+    return (pos * 2) + 1;
+}
+
+int minHeap::rightNode(int pos){
+    return (pos * 2) + 2;
+}
+
 
 void minHeap::siftUp(int pos){
-    while ((pos / 2) > 0){
-        int temp = heap[pos / 2];
-        if (heap[pos] < temp){
-            heap[pos / 2] = heap[pos];
-            heap[pos] = temp;
-        }
-        pos = pos / 2;
+    if(pos == 0)
+        return;
+    int parent = parentNode(pos);
+    if(heap[parent] > heap[pos]){
+        int temp = heap[pos];
+        heap[parent] = heap[pos];
+        heap[pos] = temp;
+        siftUp(parent);
     }
 }
 
 void minHeap::siftDown(int pos){
-    int minLeaf;
-    while ((pos * 2) <= heap.size()){
-        if(pos * 2 + 1 > heap.size()){
-            minLeaf = pos * 2;
-        }else{
-            if(heap[pos * 2] < heap[pos * 2 + 1]){
-                minLeaf = pos * 2;
-            }
-            else{
-                minLeaf = pos * 2 + 1;
-            }
-        }
+    int size = heap.size();
+    int left = leftNode(pos);
+    int right = rightNode(pos);
 
+    if(left >= size)
+        return;
+    
+    int min = pos;
+
+    if(heap[pos] > heap[left]){
+        min = left;
+    }
+    
+    if((right < size) && (heap[min] > heap[right])){
+        min = right;
+    }
+
+    if(min != pos){
         int temp = heap[pos];
-        if (temp > heap[minLeaf]){   
-            heap[pos] = heap[minLeaf];
-            heap[minLeaf] = temp;
-        }
-        pos = minLeaf;
+        heap[pos] = heap[min];
+        heap[min] = temp;
+        siftDown(min);
     }
 }
 
 minHeap::minHeap(vector<int> data){
-    int pos = data.size() / 2;
-    heap = data;
-    while(pos > 0){
-        siftDown(pos);
-        pos = pos - 1;
+    for(int pos:data){
+        insert(pos);
     }
 }
 
 void minHeap::insert(int value){
     heap.push_back(value);
-    siftUp(heap.size());
+    siftUp(heap.size() - 1);
 }
 
 int minHeap::removeMin(){
-    int temp = heap[1];
-    heap[1] = heap[heap.size()];
+    int temp = heap[0];
+    heap[0] = heap[heap.size() - 1];
     heap.pop_back();
-    siftDown(1);
+    siftDown(0);
     return temp;
 }
