@@ -9,8 +9,14 @@ using namespace std;
 
 int main()
 {
-    vector<int> input={1,2,3,4,5,6,7,8,9,10};
-    vector<int> test={1,2,3,4,5,6,7,8,9,10};
+    vector<int> input;
+    for(int i = 1; i < 11; i++){
+    input.push_back(i);
+  }
+    vector<int> test;
+    for(int i = 1; i < 11; i++){
+    test.push_back(i);
+  }
     vector<int> heapTest;
     minHeap h;
 
